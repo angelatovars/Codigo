@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+// Definición de la estructura de un nodo de árbol binario
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+// Función para encontrar el peso de la hoja más profunda en el árbol
+int findDeepestLeafWeight(TreeNode* root) {
+    if (root == nullptr) {
+        return 0;
+    }
+    if (root->left == nullptr && root->right == nullptr) {
+        return root->val;
+    }
+    int leftWeight = findDeepestLeafWeight(root->left);
+    int rightWeight = findDeepestLeafWeight(root->right);
+    return max(leftWeight, rightWeight) + root->val;
+}
+
+int main() {
+    // Crear un árbol binario de ejemplo
+    TreeNode* root = new TreeNode(10);
+    root->left = new TreeNode(5);
+    root->right = new TreeNode(15);
+    root->left->left = new TreeNode(3);
+    root->left->right = new TreeNode(7);
+    root->right->left = new TreeNode(12);
+    root->right->right = new TreeNode(20);
+
+    // Encontrar el peso de la hoja más profunda
+    int deepestLeafWeight = findDeepestLeafWeight(root);
+    cout << "El peso de la hoja más profunda es: " << deepestLeafWeight << endl;
+
+    // Crear una lista para ordenar con Quicksort
+    vector<int> lista = {15, 2, 7, 9, 12, 5, 6};
+
+    // Ordenar la lista con Quicksort
+    sort(lista.begin(), lista.end());
+
+    // Elemento a buscar en la lista ordenada
+    int elementoBuscado = 7;
+
+    // Realizar la búsqueda binaria
+    if (binary_search(lista.begin(), lista.end(), elementoBuscado)) {
+        cout << "El elemento " << elementoBuscado << " se encuentra en la lista." << endl;
+    } else {
+        cout << "El elemento " << elementoBuscado << " no se encuentra en la lista." << endl;
+    }
+
+    return 0;
+}
